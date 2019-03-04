@@ -1,0 +1,494 @@
+---
+title: "Football DB"
+output:
+  pdf_document: default
+  html_notebook: default
+---
+
+### Packages
+
+```{r}
+library(rvest)
+library(reshape)
+library(tidyverse)
+```
+
+### Quarterbacks
+
+
+```{r}
+# years 2014-2017
+
+for (j in 2014:2017){
+  i <- 1
+  while( i <= 16){
+    url1 <- "https://www.footballdb.com/fantasy-football/index.html?pos=QB&yr="
+    
+    url <- paste0(url1,j,"&wk=",i,"&rules=1")
+    
+    qbstats <- url %>%
+      read_html() %>%
+      html_nodes("td") %>%
+      html_text() %>% 
+      strsplit(split = "\n") %>% 
+      unlist() 
+    
+    qbstats <- qbstats[1:(length(qbstats)-59)]
+    x <- matrix(qbstats, ncol = 19, byrow = TRUE)
+    x <- as.data.frame(cbind(x, pos = rep("QB", dim(x)[1]), year = rep(j, dim(x)[1]), week = rep(i, dim(x)[1])))
+    
+    names(x) <- c("player", "game", "points", "pass.att", "comp", "pass.yards", "pass.TD", "int", "pass.2pt", "rush.att", "rush.yards", "rush.TD", "rush.2pt", "rec", "rec.yards", "rec.TD", "rec.2pt", "FL", "fumble.TD", "pos", "year", "week")
+    
+    assign(paste0("week",i,"yr",j,"QB"), x)
+    
+    i <- i + 1
+  }
+  x <- NULL
+}
+
+############################################################################
+
+# 2018 
+
+i <- 1
+while( i <= 10){
+  url1 <- "https://www.footballdb.com/fantasy-football/index.html?pos=QB&yr="
+    
+  url <- paste0(url1,2018,"&wk=",i,"&rules=1")
+    
+  qbstats <- url %>%
+    read_html() %>%
+    html_nodes("td") %>%
+    html_text() %>% 
+    strsplit(split = "\n") %>% 
+    unlist() 
+    
+  qbstats <- qbstats[1:(length(qbstats)-59)]
+  x <- matrix(qbstats, ncol = 19, byrow = TRUE)
+  x <- as.data.frame(cbind(x, pos = rep("QB", dim(x)[1]), year = rep(2018, dim(x)[1]), week = rep(i, dim(x)[1])))
+  
+  names(x) <- c("player", "game", "points", "pass.att", "comp", "pass.yards", "pass.TD", "int", "pass.2pt", "rush.att", "rush.yards", "rush.TD", "rush.2pt", "rec", "rec.yards", "rec.TD", "rec.2pt", "FL", "fumble.TD", "pos", "year", "week")
+    
+  assign(paste0("week",i,"yr",2018,"QB"), x)
+    
+  i <- i + 1
+  }
+x <- NULL
+
+```
+
+
+### Running Backs
+
+
+```{r}
+# 2014-2017
+
+for (j in 2014:2017){
+  i <- 1
+  while( i <= 16){
+    url1 <- "https://www.footballdb.com/fantasy-football/index.html?pos=RB&yr="
+    
+    url <- paste0(url1,j,"&wk=",i,"&rules=1")
+    
+    rbstats <- url %>%
+      read_html() %>%
+      html_nodes("td") %>%
+      html_text() %>% 
+      strsplit(split = "\n") %>% 
+      unlist() 
+    
+    rbstats <- rbstats[1:(length(rbstats)-59)]
+    x <- matrix(rbstats, ncol = 19, byrow = TRUE)
+    x <- as.data.frame(cbind(x, pos = rep("RB", dim(x)[1]), year = rep(j, dim(x)[1]), week = rep(i, dim(x)[1])))
+  
+    names(x) <- c("player", "game", "points", "pass.att", "comp", "pass.yards", "pass.TD", "int", "pass.2pt", "rush.att", "rush.yards", "rush.TD", "rush.2pt", "rec", "rec.yards", "rec.TD", "rec.2pt", "FL", "fumble.TD", "pos", "year", "week")
+    
+    assign(paste0("week",i,"yr",j,"RB"), x)
+    
+    i <- i + 1
+  }
+  x <- NULL
+}
+
+############################################################################
+
+# 2018 
+
+i <- 1
+while( i <= 10){
+  url1 <- "https://www.footballdb.com/fantasy-football/index.html?pos=RB&yr="
+    
+  url <- paste0(url1,2018,"&wk=",i,"&rules=1")
+    
+  rbstats <- url %>%
+    read_html() %>%
+    html_nodes("td") %>%
+    html_text() %>% 
+    strsplit(split = "\n") %>% 
+    unlist() 
+    
+  rbstats <- rbstats[1:(length(rbstats)-59)]
+  x <- matrix(rbstats, ncol = 19, byrow = TRUE)
+  x <- as.data.frame(cbind(x, pos = rep("RB", dim(x)[1]), year = rep(2018, dim(x)[1]), week = rep(i, dim(x)[1])))
+  
+  names(x) <- c("player", "game", "points", "pass.att", "comp", "pass.yards", "pass.TD", "int", "pass.2pt", "rush.att", "rush.yards", "rush.TD", "rush.2pt", "rec", "rec.yards", "rec.TD", "rec.2pt", "FL", "fumble.TD", "pos", "year", "week")
+    
+  assign(paste0("week",i,"yr",2018,"RB"), x)
+    
+  i <- i + 1
+  }
+x <- NULL
+```
+
+
+### Wide Receivers
+
+
+```{r}
+# 2014-2018
+
+for (j in 2014:2017){
+  i <- 1
+  while( i <= 16){
+    url1 <- "https://www.footballdb.com/fantasy-football/index.html?pos=WR&yr="
+    
+    url <- paste0(url1,j,"&wk=",i,"&rules=1")
+    
+    wrstats <- url %>%
+      read_html() %>%
+      html_nodes("td") %>%
+      html_text() %>% 
+      strsplit(split = "\n") %>% 
+      unlist() 
+    
+    wrstats <- wrstats[1:(length(wrstats)-59)]
+    x <- matrix(wrstats, ncol = 19, byrow = TRUE)
+    x <- as.data.frame(cbind(x, pos = rep("WR", dim(x)[1]), year = rep(j, dim(x)[1]), week = rep(i, dim(x)[1])))
+  
+    names(x) <- c("player", "game", "points", "pass.att", "comp", "pass.yards", "pass.TD", "int", "pass.2pt", "rush.att", "rush.yards", "rush.TD", "rush.2pt", "rec", "rec.yards", "rec.TD", "rec.2pt", "FL", "fumble.TD", "pos", "year", "week")
+    
+    assign(paste0("week",i,"yr",j,"WR"), x)
+    
+    i <- i + 1
+  }
+  x <- NULL
+}
+
+############################################################################
+
+# 2018 
+
+i <- 1
+while( i <= 10){
+  url1 <- "https://www.footballdb.com/fantasy-football/index.html?pos=WR&yr="
+    
+  url <- paste0(url1,2018,"&wk=",i,"&rules=1")
+    
+  wrstats <- url %>%
+    read_html() %>%
+    html_nodes("td") %>%
+    html_text() %>% 
+    strsplit(split = "\n") %>% 
+    unlist() 
+    
+  wrstats <- wrstats[1:(length(wrstats)-59)]
+  x <- matrix(wrstats, ncol = 19, byrow = TRUE)
+  x <- as.data.frame(cbind(x, pos = rep("WR", dim(x)[1]), year = rep(2018, dim(x)[1]), week = rep(i, dim(x)[1])))
+  
+  names(x) <- c("player", "game", "points", "pass.att", "comp", "pass.yards", "pass.TD", "int", "pass.2pt", "rush.att", "rush.yards", "rush.TD", "rush.2pt", "rec", "rec.yards", "rec.TD", "rec.2pt", "FL", "fumble.TD", "pos", "year", "week")
+    
+  assign(paste0("week",i,"yr",2018,"WR"), x)
+    
+  i <- i + 1
+  }
+x <- NULL
+```
+
+### Defense/Special teams
+
+
+```{r}
+# 2014-2017
+
+for (j in 2014:2017){
+  i <- 1
+  while( i <= 16){
+    url1 <- "https://www.footballdb.com/fantasy-football/index.html?pos=DST&yr="
+    
+    url <- paste0(url1,j,"&wk=",i,"&rules=1")
+    
+    defstats <- url %>%
+      read_html() %>%
+      html_nodes("td") %>%
+      html_text() %>% 
+      strsplit(split = "\n") %>% 
+      unlist() 
+    
+    defstats <- defstats[1:(length(defstats)-59)]
+    x <- matrix(defstats, ncol = 13, byrow = TRUE)
+    x <- as.data.frame(cbind(x, year = rep(j, dim(x)[1]), week = rep(i, dim(x)[1])))
+  
+    names(x) <- c("team", "opp", "points", "sack", "int", "safeties", "fumble.rec", "blocked.kicks", "TD", "points.against", "pass.yards.allowed", "rush.yards.allowed", "total.yards.allowed", "year", "week")
+    
+    assign(paste0("week",i,"yr",j,"def"), x)
+    
+    i <- i + 1
+  }
+  x <- NULL
+}
+
+############################################################################
+
+# 2018
+
+i <- 1
+while( i <= 10){
+  url1 <- "https://www.footballdb.com/fantasy-football/index.html?pos=DST&yr="
+    
+  url <- paste0(url1,2018,"&wk=",i,"&rules=1")
+    
+  defstats <- url %>%
+    read_html() %>%
+    html_nodes("td") %>%
+    html_text() %>% 
+    strsplit(split = "\n") %>% 
+    unlist() 
+    
+  defstats <- defstats[1:(length(defstats)-59)]
+  x <- matrix(defstats, ncol = 13, byrow = TRUE)
+  x <- as.data.frame(cbind(x, year = rep(2018, dim(x)[1]), week = rep(i, dim(x)[1])))
+  
+  names(x) <- c("team", "opp", "points", "sack", "int", "safeties", "fumble.rec", "blocked.kicks", "TD", "points.against", "pass.yards.allowed", "rush.yards.allowed", "total.yards.allowed", "year", "week")
+    
+  assign(paste0("week",i,"yr",2018,"def"), x)
+    
+  i <- i + 1
+}
+x <- NULL
+```
+
+### Combine offensive data
+
+```{r}
+# 2014-2017 names
+df.names <- paste0(rep(paste0(rep("week", 64), 
+                              rep(1:16, each = 4), 
+                              rep("yr", 64), 
+                              rep(2014:2017, times = 3)), times = 3), 
+                   rep(c("QB", "RB", "WR"), each = 64))
+
+# 2018 names
+df.names2018 <- paste0(rep(paste0(rep("week", 10), 
+                           1:10, 
+                           rep("yr", 10), 
+                           rep(2018, 30)), times = 3), 
+                       rep(c("QB", "RB", "WR"), each = 10))
+
+# combine names
+df.names.all <- c(df.names, df.names2018)
+
+# combine data frames
+off.data <- do.call(rbind, lapply(df.names.all, get))
+```
+
+### Combine defensive data
+
+```{r}
+# 2014-2017 names
+df.names <- paste0(
+  rep("week", 4*16), 
+  rep(1:16, each = 4), 
+  rep("yr", 4*16), 
+  rep(2014:2017), 
+  rep("def", 4*16)) 
+
+# 2018 names
+df.names2018 <- paste0(
+  rep("week", 10), 
+  1:10, 
+  rep("yr", 10), 
+  rep(2018, 10), 
+  rep("def", 10))
+
+# combine names
+df.names.all <- c(df.names, df.names2018)
+
+# combine data frames
+def.data <- do.call(rbind, lapply(df.names.all, get))
+```
+
+
+### Write data to csv
+
+```{r}
+write_csv(off.data, "off.data.csv")
+write_csv(def.data, "def.data.csv")
+```
+
+### Read csv data in
+
+- this solves most of the data structuring problems
+
+```{r}
+off <- read_csv("off.data.csv")
+def <- read_csv("def.data.csv")
+```
+
+### Split offensive data player/game columns
+
+```{r}
+# player column
+name <- word(off$player, -1) %>% 
+  str_split(boundary("word"), simplify = TRUE)
+firstname <- word(off$player, 1)
+firstletter <- str_sub(firstname, 1, 1)
+lastname <- name[,2]
+name <- str_c(firstletter, ".", lastname)
+# put name back into dataframe
+off$player <- name
+
+####################################################
+
+# splits teams into home/away
+game <- off$game %>% 
+  str_split("@", simplify = TRUE)
+# put back into dataframe
+off$home <- game[,1]
+off$away <- game[,2]
+```
+
+### Reorder/rewrite to csv
+
+```{r}
+off$home[off$home == "LA"] <- "LAR"
+off$away[off$away == "LA"] <- "LAR"
+off.clean <- off %>% 
+  select(player, pos, home, away, 2:22)
+
+write_csv(off.clean, "off.data.csv")
+off <- read_csv("off.data.csv")
+```
+
+### Split defensive team/opp columns
+
+```{r}
+def$team[def$team == "Arizona CardinalsARI"] <- "ARI"
+def$team[def$team == "Atlanta FalconsATL"] <- "ATL"
+def$team[def$team == "Baltimore RavensBAL"] <- "BAL"
+def$team[def$team == "Buffalo BillsBUF"] <- "BUF"
+def$team[def$team == "Carolina PanthersCAR"] <- "CAR"
+def$team[def$team == "Chicago BearsCHI"] <- "CHI"
+def$team[def$team == "Cincinnati BengalsCIN"] <- "CIN"
+def$team[def$team == "Cleveland BrownsCLE"] <- "CLE"
+def$team[def$team == "Dallas CowboysDAL"] <- "DAL"
+def$team[def$team == "Denver BroncosDEN"] <- "DEN"
+def$team[def$team == "Detroit LionsDET"] <- "DET"
+def$team[def$team == "Green Bay PackersGB"] <- "GB"
+def$team[def$team == "Houston TexansHOU"] <- "HOU"
+def$team[def$team == "Indianapolis ColtsIND"] <- "IND"
+def$team[def$team == "Jacksonville JaguarsJAX"] <- "JAX"
+def$team[def$team == "Kansas City ChiefsKC"] <- "KC"
+def$team[def$team == "Los Angeles ChargersLAC"] <- "LAC"
+def$team[def$team == "Los Angeles RamsLA"] <- "LAR"
+def$team[def$team == "Miami DolphinsMIA"] <- "MIA"
+def$team[def$team == "Minnesota VikingsMIN"] <- "MIN"
+def$team[def$team == "New England PatriotsNE"] <- "NE"
+def$team[def$team == "New Orleans SaintsNO"] <- "NO"
+def$team[def$team == "New York GiantsNYG"] <- "NYG"
+def$team[def$team == "New York JetsNYJ"] <- "NYJ"
+def$team[def$team == "Oakland RaidersOAK"] <- "OAK"
+def$team[def$team == "Philadelphia EaglesPHI"] <- "PHI"
+def$team[def$team == "Pittsburgh SteelersPIT"] <- "PIT"
+def$team[def$team == "San Diego ChargersSD"] <- "SD"
+def$team[def$team == "San Francisco 49ersSF"] <- "SF"
+def$team[def$team == "Seattle SeahawksSEA"] <- "SEA"
+def$team[def$team == "St. Louis RamsSTL"] <- "STL"
+def$team[def$team == "Tampa Bay BuccaneersTB"] <- "TB"
+def$team[def$team == "Tennessee TitansTEN"] <- "TEN"
+def$team[def$team == "Washington RedskinsWAS"] <- "WAS"
+```
+
+### Rewrite to csv
+
+```{r}
+write_csv(def, "def.data.csv")
+def <- read_csv("def.data.csv")
+```
+
+### Team Rosters
+
+```{r}
+for (i in 2014:2017){
+  temp1 <- "https://raw.githubusercontent.com/ryurko/nflscrapR-data/master/legacy_data/team_rosters/team_"
+  temp2 <- "_rosters.csv"
+  url <- paste0(temp1, i, temp2)
+  assign(paste0("teamroster", i), read_csv(url))
+}
+
+roster <- bind_rows(teamroster2014, teamroster2015, teamroster2016, teamroster2017)
+colnames(roster)[which(names(roster) == "name")] <- "player"
+
+roster.2018 <- read_csv("2018roster.csv") %>% 
+  select(player = Player, pos = Pos, team = Tm)
+
+temp <- str_split(roster.2018$player, boundary("word"), simplify = TRUE)
+firstletter <- str_sub(temp[,1], 1, 1)
+lastname <- temp[,2]
+name <- str_c(firstletter, ".", lastname)
+roster.2018$player <- name
+roster.2018 <- roster.2018 %>% mutate(year = 2018)
+```
+
+### Join off with rosters
+
+```{r}
+temp <- left_join(off, roster, by = "player") %>% 
+  filter(year == Season)  %>% 
+  mutate(opp = if_else(Team == home, away, home))%>%
+  mutate(h.a = if_else(Team == home, "home", "away")) %>% 
+  select(player, pos, team=Team, opp, h.a, year, week, 3:22) %>% 
+  mutate(id = paste0("week", week, "year", year, opp))
+
+
+offtemp <- off %>% filter(year == "2018") %>% unique()
+
+temp2018 <- left_join(off, roster.2018, by = "player") %>% 
+  filter(year.x == year.y) %>% 
+  filter(pos.x == pos.y) 
+
+temp2018$team[temp2018$team == "GNB"] <- "GB"
+temp2018$team[temp2018$team == "NOR"] <- "NO"
+temp2018$team[temp2018$team == "NWE"] <- "NE"
+temp2018$team[temp2018$team == "SFO"] <- "SF"
+temp2018$team[temp2018$team == "TAM"] <- "TB"
+temp2018$team[temp2018$team == "KAN"] <- "KC"
+
+temp2018 <- temp2018 %>% 
+  mutate(opp = if_else(team == home, away, home)) %>% 
+  mutate(h.a = if_else(team == home, "home", "away")) %>% 
+  select(player, pos = pos.x, team, opp, h.a, year = year.x, week, 3:22) %>% 
+  mutate(id = paste0("week", week, "year", year, opp))
+
+
+def$opp <- word(def$opp, -1)
+
+def.temp <- def %>% 
+  mutate(id = paste0("week", week, "year", year, team))
+
+
+final.df1 <- left_join(temp, def.temp, by = "id") %>% 
+  select(player, pos, team = team.x, opp = opp.x, h.a, year = year.x, week = week.x, off.points = points.x, pass.att, comp, pass.yards, pass.TD, int = int.x, pass.2pt, rush.att, rush.yards, rush.TD, rush.2pt, rec, rec.yards, rec.TD, rec.2pt, FL, fumble.TD, def.points = points.y, sack, int.def = int.y, safeties, fumble.rec, blocked.kicks, def.TD = TD, points.against, pass.yards.allowed, rush.yards.allowed, total.yards.allowed) 
+
+
+final.df2 <- left_join(temp2018, def.temp, by = "id") %>% 
+  select(player, pos, team = team.x, opp = opp.x, h.a, year = year.x, week = week.x, off.points = points.x, pass.att, comp, pass.yards, pass.TD, int = int.x, pass.2pt, rush.att, rush.yards, rush.TD, rush.2pt, rec, rec.yards, rec.TD, rec.2pt, FL, fumble.TD, def.points = points.y, sack, int.def = int.y, safeties, fumble.rec, blocked.kicks, def.TD = TD, points.against, pass.yards.allowed, rush.yards.allowed, total.yards.allowed) 
+
+
+final.df <- bind_rows(final.df1, final.df2) %>% 
+  write_csv("nfldata.csv")
+
+
+nfl <- read_csv("nfldata.csv") %>% unique() %>% write_csv("nfldata.csv")
+```
+
